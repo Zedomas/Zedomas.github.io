@@ -47,24 +47,25 @@ $(() => {
     
     function hit() {
         let hitCard = draw(1)
+        console.log(hitCard.cards)
         hitCount ++;
-        console.log(hitCard)
+
         $('.remaining').text(hitCard.remaining)
         $('.playerHand').append($('<div>').addClass("hit").attr("id", ""+hitCount+""))
-        console.log(hitCard)
         $('#'+hitCount+'').css("background-image", "url("+hitCard.cards[0].image+")")
         let previousTotal = parseInt($('.playerTotal').text(), 10)
         cardTotal = cardValues(hitCard.cards[0]) + previousTotal
         console.log(cardValues(hitCard.cards[0]))
         if (cardTotal > 21) {
             $('.playerTotal').text("BUSTED")
+            hitCount = 0;
                     
         } else {
             $('.playerTotal').text(cardTotal)
         }
-        console.log($('.playerTotal').text())
         if( $('.playerTotal').text() == "BUSTED") {
-           $('.hit-btn').attr('disabled', true)           
+           $('.hit-btn').attr('disabled', true)
+                     
         }
     }    
 
@@ -87,10 +88,11 @@ $(() => {
         console.log(cardTotal)
         $('.playerTotal').text(cardTotal)
         
-        $('.hit-btn').on('click', hit)
+       
         
     }
-   $('.button').on("click", playerCards)
+    $('.button').on("click", playerCards)
+    $('.hit-btn').on('click', hit)
 })
 
 

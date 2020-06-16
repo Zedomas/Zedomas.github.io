@@ -14,11 +14,18 @@ function newDeckMaker() {
   return deck.responseJSON.deck_id;
 }
 ////
+function newHand() {
+    $('.playerHand').empty()
+    $('.playerHand').append($('<div>').addClass("left"))
+    $('.playerHand').append($('<div>').addClass("right"))
+    $('.hit-btn').attr('disabled', false)
+}
+
+
 
 /// Takes the string value of cards and returns a number value
 function cardValues(card) {
     if (card.value == "JACK" || card.value == "KING" || card.value == "QUEEN") {
-        console.log(card.value)
         return 10
     } else {
         return parseInt(card.value, 10)
@@ -46,14 +53,28 @@ $(() => {
         $('.playerHand').append($('<div>').addClass("hit").attr("id", ""+hitCount+""))
         console.log(hitCard)
         $('#'+hitCount+'').css("background-image", "url("+hitCard.cards[0].image+")")
-        
+        let previousTotal = parseInt($('.playerTotal').text(), 10)
+        cardTotal = cardValues(hitCard.cards[0]) + previousTotal
+        console.log(cardValues(hitCard.cards[0]))
+        if (cardTotal > 21) {
+            $('.playerTotal').text("BUSTED")
+                    
+        } else {
+            $('.playerTotal').text(cardTotal)
+        }
+        console.log($('.playerTotal').text())
+        if( $('.playerTotal').text() == "BUSTED") {
+           $('.hit-btn').attr('disabled', true)           
+        }
     }    
 
 
     let deckID = newDeckMaker()
     console.log(deckID)
    
-    function playerCards(x) {
+    function playerCards() {
+        newHand()
+        
         let playerHand = draw(2)
         card1 = playerHand.cards[0]
         card2 = playerHand.cards[1]
@@ -61,12 +82,12 @@ $(() => {
         $('.remaining').text(playerHand.remaining)
         $('.left').css("background-image", "url("+card1.image+")")
         $('.right').css("background-image", "url("+card2.image+")")
+        
+        let cardTotal = cardValues(card1) + cardValues(card2)
+        console.log(cardTotal)
+        $('.playerTotal').text(cardTotal)
+        
         $('.hit-btn').on('click', hit)
-        // let cardTotal = cardValues(hand.cards[0]) + cardValues(hand.cards[1])
-        // console.log(cardValues(hand.cards[0]))
-        // console.log(cardTotal)
-        // $('.playerTotal').text(cardTotal)
-
         
     }
    $('.button').on("click", playerCards)

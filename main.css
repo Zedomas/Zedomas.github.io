@@ -2,22 +2,22 @@
     display: inline;
 }
 .left {
-    height: 180px;
-    width: 130px;
+    height: 110px;
+    width: 80px;
     background-size: cover;
     background-position: center;
     display: inline-block;
 }
 .right {
-    height: 180px;
-    width: 130px;
+    height: 110px;
+    width: 80px;
     background-size: cover;
     background-position: center;
     display: inline-block;
 }
 .hit {
-    height: 180px;
-    width: 130px;
+    height: 110px;
+    width: 80px;
     background-size: cover;
     background-position: center;
     display: inline-block; 

@@ -1,3 +1,6 @@
+.playerHand {
+    display: inline;
+}
 .left {
     height: 280px;
     width: 200px;
@@ -11,4 +14,11 @@
     background-size: cover;
     background-position: center;
     display: inline-block;
+}
+.hit {
+    height: 280px;
+    width: 200px;
+    background-size: cover;
+    background-position: center;
+    display: inline-block; 
 }

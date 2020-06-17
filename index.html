@@ -9,15 +9,24 @@
     <script src="app.js"></script>
 </head>
 <body>
-   <button class="button">New Deal</button>
-   <button class="shuffle">Shuffle</button>
-   <div class="playerHand">
-      <div class="left"></div>
-      <div class="right"></div> 
+   <aside class="leftside">
+      <button class="button">New Deal</button>     
+      <button class="hit-btn">Hit</button>
+      <button class="stay-btn">Stay</button>
+   </aside>
+
+   <div class="container">     
+      <div class="table">
+         <div class="playerHand">
+         </div>
+         <div class="dealerHand">
+         </div>
+         
+      </div>   
    </div>
-   <button class="hit-btn">Hit</button>
-   <button class="stay-btn">Stay</button>
-   <div class="remaining"></div>
-   <div class="playerTotal"></div>
+   <aside class="rightside">
+      <div class="remaining"></div> 
+      <button class="shuffle">Shuffle</button>
+   </aside>
 </body>
 </html>

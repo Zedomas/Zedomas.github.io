@@ -1,5 +1,24 @@
+.body {
+    display: flex;
+
+}
+
+.table {
+    align-self: center;
+    height: 600px;
+    width: 500px;
+    background-color: rgb(32, 116, 32);
+    display: flex;
+    justify-content: center;
+}
+
 .playerHand {
-    display: inline;
+    align-self: flex-end;
+    flex-wrap: wrap;
+    display: inline-block;
+}
+.dealerHand {
+    align-self: flex-start;
 }
 .left {
     height: 110px;
@@ -21,6 +40,35 @@
     width: 80px;
     background-size: cover;
     background-position: center;
-    display: inline-block; 
+    display: inline-block;
+
+}
+.dHit {
+    height: 110px;
+    width: 80px;
+    background-size: cover;
+    background-position: center;
+    display: inline-block;
+
 }
 
+
+.dLeft {
+    height: 110px;
+    width: 80px;
+    background-size: cover;
+    background-position: center;
+    display: inline-block;
+}
+.dRight {
+    height: 110px;
+    width: 80px;
+    background-size: cover;
+    background-position: center;
+    display: inline-block;
+    transform: translate(-65px);
+}
+
+.back {
+    transform: scale(1.3);
+}

@@ -7,8 +7,8 @@ let dealerCount = 0;
 let aces = 0;
 let cardTotal = 0;
 let deckID;
-let pCard1 = {}
-let pCard2 = {}
+let pCard1;
+let pCard2;
 let dCard1;
 let dCard2;
 
@@ -35,7 +35,15 @@ function newHand() {
     $('.playerHand').empty()
     $('.playerHand').append($('<div>').addClass("left"))
     $('.playerHand').append($('<div>').addClass("right"))
+    $('.playerHand').append($('<div>').addClass("playerTotal"))
+
+    $('.dealerHand').empty()
+    $('.dealerHand').append($('<div>').addClass("dLeft"))
+    $('.dealerHand').append($('<div>').addClass("dRight"))
+    $('.dealerHand').append($('<div>').addClass("dealerTotal"))
+
     $('.hit-btn').attr('disabled', false)
+    $('.stay-btn').attr('disabled', false)
     aces = 0;
     hitCount = 0;
     dealerCount = 0;
@@ -100,36 +108,47 @@ $(() => {
     function dealerPlay() {
         // console.log(dCard2)
         let dealerTotal = cardValues(dCard1) + cardValues(dCard2)
+        $('.dRight').css("background-image", "url("+dCard2.image+")").removeClass('back')  
         dealerHand = []
         dealerHand.push(dCard1)
         dealerHand.push(dCard2)
-        console.log(dealerHand)
         cardTotal = parseInt($('.playerTotal').text(), 10)
-        console.log(cardTotal + " cardTotal")
+        // console.log(cardTotal + " cardTotal")
         while (dealerTotal < 17) {
             let dealerHitCard = draw(1);
+            //adding new card div and giving it an image for the dealer
+            $('.dealerHand').append($('<div>').addClass("dHit").attr("id", "d"+dealerCount+"").addClass(dealerHitCard.cards[0]))
+            $('#d'+dealerCount+'').css("background-image", "url("+dealerHitCard.cards[0].image+")")
+            //
             dealerHand.push(dealerHitCard.cards[0])
             dealerCount ++;
             $('.remaining').text(dealerHitCard.remaining)
             // add dealer card images
-            console.log(dealerHitCard.cards[0])
             dealerTotal += cardValues(dealerHitCard.cards[0])
-            console.log("click")
+            $('.dealerTotal').text(dealerTotal)
         }
         if (dealerTotal < cardTotal ) {
             console.log("you win")
-            console.log(dealerTotal + "him  you" + cardTotal)
+            console.log(dealerTotal + "him  you" + cardTotal);
+            $('.hit-btn').attr('disabled', true)
+            $('.stay-btn').attr('disabled', true) 
         } else if (dealerTotal > cardTotal ) {
             if (dealerTotal > 22 ) {
                 console.log("Dealer Bust");
-                console.log(dealerTotal + "him  you" + cardTotal)  ;              
+                console.log(dealerTotal + "him  you" + cardTotal);
+                $('.hit-btn').attr('disabled', true)
+                $('.stay-btn').attr('disabled', true)              
             } else {
                 console.log("dealer wins");
                 console.log(dealerTotal + "him  you" + cardTotal);
+                $('.hit-btn').attr('disabled', true)
+                $('.stay-btn').attr('disabled', true)  
             }
         } else if (dealerTotal == cardTotal) {
             console.log("dealer wins its a tie");
             console.log(dealerTotal + "him  you" + cardTotal);
+            $('.hit-btn').attr('disabled', true)
+            $('.stay-btn').attr('disabled', true)  
         }
     }
 
@@ -144,15 +163,22 @@ $(() => {
         dCard1 = dealerHand.cards[0]
         dCard2 = dealerHand.cards[1]
 
+        $('.dLeft').css("background-image", "url("+dCard1.image+")").addClass(dCard1.value)
+        $('.dRight').css("background-image", "url(imgs/pngwing.com.png)").addClass(dCard2.value).addClass('back') 
+
         $('.remaining').text(playerHand.remaining)
         $('.left').css("background-image", "url("+pCard1.image+")").addClass(pCard1.value)
-        $('.right').css("background-image", "url("+pCard2.image+")").addClass(pCard2.value)       
+        $('.right').css("background-image", "url("+pCard2.image+")").addClass(pCard2.value) 
+        console.log(cardValues(pCard2))
+        console.log(cardValues(pCard1))       
         let cardTotal = cardValues(pCard1) + cardValues(pCard2)
+        console.log(cardTotal)
         if (cardTotal == 21) {
             cardTotal = "Blackjack!"
             $('.hit-btn').attr('disabled', true) 
         }
         $('.playerTotal').text(cardTotal)
+        $('.dealerTotal').text(cardValues(dCard1))
 
         
                

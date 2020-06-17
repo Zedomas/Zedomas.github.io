@@ -2,7 +2,7 @@ const url = "https://deckofcardsapi.com/api/deck/"
 const newDeck = "new/shuffle/?deck_count=1"
 const drawCount = "/draw/?count="
 const shuffle = "/shuffle/"
-var hitCount = 0;
+let hitCount = 0;
 
 //// Generates a new deck and gives the Deck id number
 function newDeckMaker() { 
@@ -13,15 +13,13 @@ function newDeckMaker() {
   });
   return deck.responseJSON.deck_id;
 }
-////
+//// new hand
 function newHand() {
     $('.playerHand').empty()
     $('.playerHand').append($('<div>').addClass("left"))
     $('.playerHand').append($('<div>').addClass("right"))
     $('.hit-btn').attr('disabled', false)
 }
-
-
 
 /// Takes the string value of cards and returns a number value
 function cardValues(card) {
@@ -36,6 +34,8 @@ function cardValues(card) {
 
 
 $(() => {
+    let deckID = newDeckMaker()
+    console.log(deckID)
     function draw(x) {
         let cards = $.ajax({
                 type: 'GET',
@@ -51,11 +51,11 @@ $(() => {
         hitCount ++;
 
         $('.remaining').text(hitCard.remaining)
-        $('.playerHand').append($('<div>').addClass("hit").attr("id", ""+hitCount+""))
+        $('.playerHand').append($('<div>').addClass("hit").attr("id", ""+hitCount+"").addClass(hitCard.cards[0].value))
         $('#'+hitCount+'').css("background-image", "url("+hitCard.cards[0].image+")")
         let previousTotal = parseInt($('.playerTotal').text(), 10)
         cardTotal = cardValues(hitCard.cards[0]) + previousTotal
-        console.log(cardValues(hitCard.cards[0]))
+        // console.log(cardValues(hitCard.cards[0]))
         if (cardTotal > 21) {
             $('.playerTotal').text("BUSTED")
             hitCount = 0;
@@ -68,10 +68,6 @@ $(() => {
                      
         }
     }    
-
-
-    let deckID = newDeckMaker()
-    console.log(deckID)
    
     function playerCards() {
         newHand()
@@ -79,15 +75,19 @@ $(() => {
         let playerHand = draw(2)
         card1 = playerHand.cards[0]
         card2 = playerHand.cards[1]
-        console.log(playerHand)
+        //check for blackjack
         $('.remaining').text(playerHand.remaining)
-        $('.left').css("background-image", "url("+card1.image+")")
-        $('.right').css("background-image", "url("+card2.image+")")
-        
+        $('.left').css("background-image", "url("+card1.image+")").addClass(card1.value)
+        $('.right').css("background-image", "url("+card2.image+")").addClass(card2.value)        
         let cardTotal = cardValues(card1) + cardValues(card2)
-        console.log(cardTotal)
         $('.playerTotal').text(cardTotal)
         
+        if ($('.left').hasClass("8")) {
+            alert("success baby")
+        }
+        if ($('.right').hasClass("8")) {
+            alert("success baby")
+        }
        
         
     }

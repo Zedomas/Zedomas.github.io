@@ -3,6 +3,7 @@ const newDeck = "new/shuffle/?deck_count=1"
 const drawCount = "/draw/?count="
 const shuffle = "/shuffle/"
 let hitCount = 0;
+let dealerCount = 0;
 let aces = 0;
 let cardTotal = 0;
 let deckID;
@@ -37,6 +38,7 @@ function newHand() {
     $('.hit-btn').attr('disabled', false)
     aces = 0;
     hitCount = 0;
+    dealerCount = 0;
 }
 
 /// Takes the string value of cards and returns a number value
@@ -94,7 +96,38 @@ $(() => {
         }
 
     }    
-   
+    
+    function dealerPlay() {
+        // console.log(dCard2)
+        let dealerTotal = cardValues(dCard1) + cardValues(dCard2)
+        console.log(dealerTotal)
+        console.log(cardTotal)
+        while (dealerTotal < 17) {
+            let dealerHitCard = draw(1);
+            dealerCount ++;
+            $('.remaining').text(dealerHitCard.remaining)
+            // add dealer card images
+            dealerTotal += cardValues(dealerHitCard.cards[0])
+        }
+        if (dealerTotal < cardTotal ) {
+            alert("You win")
+            console.log(dealerTotal + "him  you" + cardTotal)
+        } else if (dealerTotal > cardTotal ) {
+            if (dealerTotal < 22 ) {
+                alert("Dealer Bust")
+                console.log(dealerTotal + "him  you" + cardTotal)
+                
+            } else {
+                alert("dealer wins")
+                console.log(dealerTotal + "him  you" + cardTotal)
+            }
+        } else if (dealerTotal == cardTotal) {
+            alert("dealer wins its a tie")
+            console.log(dealerTotal + "him  you" + cardTotal)
+        }
+    }
+
+
     function newDeal() {
         newHand()
         
@@ -108,7 +141,7 @@ $(() => {
         $('.remaining').text(playerHand.remaining)
         $('.left').css("background-image", "url("+pCard1.image+")").addClass(pCard1.value)
         $('.right').css("background-image", "url("+pCard2.image+")").addClass(pCard2.value)       
-        let cardTotal = cardValues(card1) + cardValues(card2)
+        let cardTotal = cardValues(pCard1) + cardValues(pCard2)
         if (cardTotal == 21) {
             cardTotal = "Blackjack!"
             $('.hit-btn').attr('disabled', true) 
@@ -119,20 +152,12 @@ $(() => {
                
         
     }
-function dealerPlay(dCard1, dCard2) {
-            
-            dealerTotal = cardValues(dCard1) + cardValues(dCard2)
-            console.log(dealerTotal)
-            if (dealerTotal < 17) {
 
-            }
-
-        }
 
     $('.button').on("click", newDeal)
     $('.hit-btn').on('click', hit)
     $('.shuffle').on('click', shuffler)
-    $('.stay').on('click', dealerPlay)
+    $('.stay-btn').on('click', dealerPlay)
 })
 
 

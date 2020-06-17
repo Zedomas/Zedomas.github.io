@@ -9,8 +9,8 @@ let cardTotal = 0;
 let deckID;
 let pCard1 = {}
 let pCard2 = {}
-let dCard1 = {}
-let dCard2 = {}
+let dCard1;
+let dCard2;
 
 //// Generates a new deck and gives the Deck id number
 function newDeckMaker() { 
@@ -100,30 +100,36 @@ $(() => {
     function dealerPlay() {
         // console.log(dCard2)
         let dealerTotal = cardValues(dCard1) + cardValues(dCard2)
-        console.log(dealerTotal)
-        console.log(cardTotal)
+        dealerHand = []
+        dealerHand.push(dCard1)
+        dealerHand.push(dCard2)
+        console.log(dealerHand)
+        cardTotal = parseInt($('.playerTotal').text(), 10)
+        console.log(cardTotal + " cardTotal")
         while (dealerTotal < 17) {
             let dealerHitCard = draw(1);
+            dealerHand.push(dealerHitCard.cards[0])
             dealerCount ++;
             $('.remaining').text(dealerHitCard.remaining)
             // add dealer card images
+            console.log(dealerHitCard.cards[0])
             dealerTotal += cardValues(dealerHitCard.cards[0])
+            console.log("click")
         }
         if (dealerTotal < cardTotal ) {
-            alert("You win")
+            console.log("you win")
             console.log(dealerTotal + "him  you" + cardTotal)
         } else if (dealerTotal > cardTotal ) {
-            if (dealerTotal < 22 ) {
-                alert("Dealer Bust")
-                console.log(dealerTotal + "him  you" + cardTotal)
-                
+            if (dealerTotal > 22 ) {
+                console.log("Dealer Bust");
+                console.log(dealerTotal + "him  you" + cardTotal)  ;              
             } else {
-                alert("dealer wins")
-                console.log(dealerTotal + "him  you" + cardTotal)
+                console.log("dealer wins");
+                console.log(dealerTotal + "him  you" + cardTotal);
             }
         } else if (dealerTotal == cardTotal) {
-            alert("dealer wins its a tie")
-            console.log(dealerTotal + "him  you" + cardTotal)
+            console.log("dealer wins its a tie");
+            console.log(dealerTotal + "him  you" + cardTotal);
         }
     }
 

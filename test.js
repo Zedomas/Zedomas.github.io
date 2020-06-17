@@ -1,7 +1,17 @@
-let test = 0
+let aces = 0;
+
+function checkAces(card) {
+    if (card == "ACE") {
+        aces ++;
+    }
+}
+
+console.log(aces)
+checkAces("ACE")
+console.log(aces)
 
 function tester() {
-    test = 2
+    aces++;
 }
 tester()
-console.log(test)
+console.log(aces)

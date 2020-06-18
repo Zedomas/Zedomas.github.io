@@ -8,11 +8,11 @@ let dealerCount = 0;
 let pAces = 0;
 let dAces = 0;
 let cardTotal = 0;
-let deckID;
-let pCard1;
-let pCard2;
-let dCard1;
-let dCard2;
+let deckID, pCard1, pCard2, dCard1, dCard2, dealerTotal;
+// let pCard1;
+// let pCard2;
+// let dCard1;
+// let dCard2;
 
 //// Generates a new deck and gives the Deck id number
 function newDeckMaker() { 
@@ -24,12 +24,17 @@ function newDeckMaker() {
   return deck.responseJSON.deck_id;
 }
 
+deckID = newDeckMaker()
+
 function shuffler() {
     $.ajax({
         type: 'GET',
         url: url+deckID+shuffle,
     });
+    newHand()
     cardCount = 0;
+    $('.cardCount').text(cardCount)
+    $('.remaining').text("52")
 }
 
 //// clears out the old hands and reenable the button
@@ -81,165 +86,182 @@ function cardValues(card) {
     }
 }
 
-$(() => {
-    // Grabs the Deck ID
-    deckID = newDeckMaker()
-    // console.log(deckID)
-    function draw(x) {
-        let cards = $.ajax({
-                type: 'GET',
-                async: false,
-                url: url+deckID+drawCount+x
-            })
-            return cards.responseJSON
-        }
+
+// Grabs the Deck ID
+
+// console.log(deckID)
+function draw(x) {
+    let cards = $.ajax({
+            type: 'GET',
+            async: false,
+            url: url+deckID+drawCount+x
+        })
+        return cards.responseJSON
+    }
 //===============================================
-    
-    function hit() {
-        // Draws a card from the deck and counts up how many times you hit
-        let hitCard = draw(1)
-        if (hitCard.value == "ACE") {
-            pAces ++;
-        }
-        hitCount ++;
-        // shows remaing cards in the deck and adds a new div for each new hit with a special id
-        $('.remaining').text(hitCard.remaining)
-        $('.playerHand').append($('<div>').addClass("hit").attr("id", ""+hitCount+"").addClass(hitCard.cards[0].value))
-        // changes the background to the image of the card
-        $('#'+hitCount+'').css("background-image", "url("+hitCard.cards[0].image+")")
-        let previousTotal = parseInt($('.playerTotal').text(), 10)
-        // console.log(previousTotal + " previous total")
-        cardTotal = cardValues(hitCard.cards[0]) + previousTotal
-        // console.log(cardValues(hitCard.cards[0]) + " last card total")
+
+function hit() {
+    // Draws a card from the deck and counts up how many times you hit
+    let hitCard = draw(1)
+    if (hitCard.cards[0].value == "ACE") {
+        pAces ++;
+    }
+    hitCount ++;
+    // shows remaing cards in the deck and adds a new div for each new hit with a special id
+    $('.remaining').text(hitCard.remaining)
+    $('.playerHand').append($('<div>').addClass("hit").attr("id", ""+hitCount+"").addClass(hitCard.cards[0].value))
+    // changes the background to the image of the card
+    $('#'+hitCount+'').css("background-image", "url("+hitCard.cards[0].image+")")
+    let previousTotal = parseInt($('.playerTotal').text(), 10)
+    // console.log(previousTotal + " previous total")
+    cardTotal = cardValues(hitCard.cards[0]) + previousTotal
+    // console.log(cardValues(hitCard.cards[0]) + " last card total")
+    $('.playerTotal').text(cardTotal)
+    if (cardTotal > 21 && pAces > 0) {
+        cardTotal -= 10;
         $('.playerTotal').text(cardTotal)
-        if (cardTotal > 21 && pAces > 0) {
-            cardTotal -= 10;
-            $('.playerTotal').text(cardTotal)
-            pAces--;
-        } else if (cardTotal > 21) {
-            // console.log(aces + " aces")
-            // console.log(cardTotal + " card total")
-            $('.playerTotal').text("BUSTED") 
-            $('.hit-btn').attr('disabled', true) 
-            $('.stay-btn').attr('disabled', true)        
-            } else {
-            $('.playerTotal').text(cardTotal)
+        pAces--;
+    } else if (cardTotal > 21) {
+        // console.log(aces + " aces")
+        // console.log(cardTotal + " card total")
+        $('.gamelog').text("Player busts, Dealer wins!")
+        $('.playerTotal').text("BUSTED") 
+        $('.hit-btn').attr('disabled', true) 
+        $('.stay-btn').attr('disabled', true)        
+        } else {
+        $('.playerTotal').text(cardTotal)
+    }
+
+}    
+
+function dealerPlay() {
+    // console.log(dCard2)
+    // let dealerTotal = cardValues(dCard1) + cardValues(dCard2)
+    $('.dealerTotal').text(dealerTotal)
+    $('.dRight').css("background-image", "url("+dCard2.image+")").removeClass('back')  
+    dealerHand = []
+    dealerHand.push(dCard1)
+    dealerHand.push(dCard2)
+    cardTotal = parseInt($('.playerTotal').text(), 10)
+    // console.log(cardTotal + " cardTotal")
+    while (dealerTotal < 17) {
+        let dealerHitCard = draw(1);
+        // Ace checker for player
+        if (dealerHitCard.cards[0].value == "ACE") {
+            console.log("hi rob")
+            dAces ++;
         }
 
-    }    
-    
-    function dealerPlay() {
-        // console.log(dCard2)
-        let dealerTotal = cardValues(dCard1) + cardValues(dCard2)
-        $('.dRight').css("background-image", "url("+dCard2.image+")").removeClass('back')  
-        dealerHand = []
-        dealerHand.push(dCard1)
-        dealerHand.push(dCard2)
-        cardTotal = parseInt($('.playerTotal').text(), 10)
-        // console.log(cardTotal + " cardTotal")
-        while (dealerTotal < 17) {
-            let dealerHitCard = draw(1);
-            // Ace checker for player
-            if (dealerHitCard.cards[0].value == "ACE") {
-                console.log("hi rob")
-                dAces ++;
-            }
+        //adding new card div and giving it an image for the dealer
+        $('.dealerHand').append($('<div>').addClass("dHit").attr("id", "d"+dealerCount+"").addClass(dealerHitCard.cards[0].value))
+        $('#d'+dealerCount+'').css("background-image", "url("+dealerHitCard.cards[0].image+")")
+        //
+        dealerHand.push(dealerHitCard.cards[0])
+        dealerCount ++;
+        $('.remaining').text(dealerHitCard.remaining)
+        // add dealer card images
+        dealerTotal += cardValues(dealerHitCard.cards[0])
+        $('.dealerTotal').text(dealerTotal)
 
-            //adding new card div and giving it an image for the dealer
-            $('.dealerHand').append($('<div>').addClass("dHit").attr("id", "d"+dealerCount+"").addClass(dealerHitCard.cards[0].value))
-            $('#d'+dealerCount+'').css("background-image", "url("+dealerHitCard.cards[0].image+")")
-            //
-            dealerHand.push(dealerHitCard.cards[0])
-            dealerCount ++;
-            $('.remaining').text(dealerHitCard.remaining)
-            // add dealer card images
-            dealerTotal += cardValues(dealerHitCard.cards[0])
+        if (dealerTotal > 21 && dAces > 0) {
+            console.log("card total before ace removed " + dealerTotal)
+            dealerTotal -= 10;
+            console.log("ace removed")
             $('.dealerTotal').text(dealerTotal)
-
-            if (dealerTotal > 21 && dAces > 0) {
-                console.log("card total before ace removed " + dealerTotal)
-                dealerTotal -= 10;
-                console.log("ace removed")
-                $('.dealerTotal').text(dealerTotal)
-                dAces--;
-            } 
-        }
-        
-        if (dealerTotal < cardTotal ) {
-            console.log("you win")
+            dAces--;
+        } 
+    }
+    if (dealerTotal > 21 && dAces > 0) {
+        console.log("card total before ace removed " + dealerTotal)
+        dealerTotal -= 10;
+        console.log("ace removed")
+        $('.dealerTotal').text(dealerTotal)
+        dAces--;
+    } 
+    
+    if (dealerTotal < cardTotal ) {
+        $('.gamelog').text("Player wins!")
+        // console.log(dealerTotal + "him  you" + cardTotal);
+        $('.hit-btn').attr('disabled', true)
+        $('.stay-btn').attr('disabled', true) 
+    } else if (dealerTotal > cardTotal ) {
+        if (dealerTotal > 21 ) {
+            $('.gamelog').text("Dealer busts, Player wins!")
             // console.log(dealerTotal + "him  you" + cardTotal);
             $('.hit-btn').attr('disabled', true)
-            $('.stay-btn').attr('disabled', true) 
-        } else if (dealerTotal > cardTotal ) {
-            if (dealerTotal > 22 ) {
-                console.log("Dealer Bust");
-                // console.log(dealerTotal + "him  you" + cardTotal);
-                $('.hit-btn').attr('disabled', true)
-                $('.stay-btn').attr('disabled', true)
-                $('.dealerTotal').text(dealerTotal)              
-            } else {
-                console.log("dealer wins");
-                // console.log(dealerTotal + "him  you" + cardTotal);
-                $('.hit-btn').attr('disabled', true)
-                $('.stay-btn').attr('disabled', true) 
-                $('.dealerTotal').text(dealerTotal) 
-            }
-        } else if (dealerTotal == cardTotal) {
-            console.log("dealer wins its a tie");
+            $('.stay-btn').attr('disabled', true)
+            $('.dealerTotal').text("BUSTED")              
+        } else {
+            $('.gamelog').text("Dealer wins!")
             // console.log(dealerTotal + "him  you" + cardTotal);
             $('.hit-btn').attr('disabled', true)
             $('.stay-btn').attr('disabled', true) 
             $('.dealerTotal').text(dealerTotal) 
         }
+    } else if (dealerTotal == cardTotal) {
+        $('.gamelog').text("Its a tie, Dealer wins");
+        // console.log(dealerTotal + "him  you" + cardTotal);
+        $('.hit-btn').attr('disabled', true)
+        $('.stay-btn').attr('disabled', true) 
+        $('.dealerTotal').text(dealerTotal) 
+    }
+}
+
+
+function newDeal() {
+    newHand()
+    
+    let playerHand = draw(2)
+    let dealerHand = draw(2)
+    
+    pCard1 = playerHand.cards[0]
+    pCard2 = playerHand.cards[1]
+    dCard1 = dealerHand.cards[0]
+    dCard2 = dealerHand.cards[1]
+
+    // Ace checker for player
+    console.log(pCard2.value)
+    if (pCard1.value == "ACE") {
+        pAces ++;
+    }
+    if (pCard2.value == "ACE") {
+        pAces ++;
     }
 
-
-    function newDeal() {
-        newHand()
-        
-        let playerHand = draw(2)
-        let dealerHand = draw(2)
-        
-        pCard1 = playerHand.cards[0]
-        pCard2 = playerHand.cards[1]
-        dCard1 = dealerHand.cards[0]
-        dCard2 = dealerHand.cards[1]
-
-        // Ace checker for player
-        if (pCard1.value == "ACE") {
-            pAces ++;
-        }
-        if (pCard2.value == "ACE") {
-            pAces ++;
-        }
-
-        // Ace checker for dealer
-        if (dCard1.value == "ACE") {
-            dAces ++;
-        }
-        if (dCard2.value == "ACE") {
-            dAces ++;
-        }
-
-        $('.dLeft').css("background-image", "url("+dCard1.image+")").addClass(dCard1.value)
-        $('.dRight').css("background-image", "url(imgs/pngwing.com.png)").addClass(dCard2.value).addClass('back') 
-
-        $('.remaining').text(playerHand.remaining)
-        $('.left').css("background-image", "url("+pCard1.image+")").addClass(pCard1.value)
-        $('.right').css("background-image", "url("+pCard2.image+")").addClass(pCard2.value)       
-        let cardTotal = cardValues(pCard1) + cardValues(pCard2)
-        if (cardTotal == 21) {
-            cardTotal = "Blackjack!"
-            $('.hit-btn').attr('disabled', true) 
-        }
-        $('.playerTotal').text(cardTotal)
-        $('.dealerTotal').text(cardValues(dCard1))
-
-        
-               
-        
+    // Ace checker for dealer
+    if (dCard1.value == "ACE") {
+        dAces ++;
     }
+    if (dCard2.value == "ACE") {
+        dAces ++;
+    }
+    
+    $('.dLeft').css("background-image", "url("+dCard1.image+")").addClass(dCard1.value)
+    $('.dRight').css("background-image", "url(imgs/pngwing.com.png)").addClass(dCard2.value).addClass('back') 
 
+    $('.remaining').text(playerHand.remaining)
+    $('.left').css("background-image", "url("+pCard1.image+")").addClass(pCard1.value)
+    $('.right').css("background-image", "url("+pCard2.image+")").addClass(pCard2.value)
+    
+    $('.gamelog').text("PLAYER DRAWS A " + pCard1.value + " AND A " + pCard2.value )
+    let cardTotal = cardValues(pCard1) + cardValues(pCard2)
+    if (cardTotal == 21) {
+        cardTotal = "Blackjack!"
+        $('.hit-btn').attr('disabled', true) 
+    }
+    dealerTotal = cardValues(dCard1) + cardValues(dCard2)
+    $('.playerTotal').text(cardTotal)
+
+    
+            
+    
+}
+
+
+
+
+
+$(() => {
 
     $('.button').on("click", newDeal)
     $('.hit-btn').on('click', hit)

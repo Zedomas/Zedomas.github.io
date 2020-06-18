@@ -1,21 +1,36 @@
-.body {
+body {
     display: flex;
+    flex-wrap: wrap;
 
+}
+.container {
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    background-color: darkslategray;
+}
+aside {
+    width: 20%;
+    background-color: saddlebrown;
 }
 
 .table {
     align-self: center;
     height: 600px;
-    width: 500px;
+    width: 800px;
     background-color: rgb(32, 116, 32);
     display: flex;
     justify-content: center;
+    flex-direction: row;
 }
 
 .playerHand {
     align-self: flex-end;
     flex-wrap: wrap;
     display: inline-block;
+}
+.gamelog {
+    align-self: center;
 }
 .dealerHand {
     align-self: flex-start;

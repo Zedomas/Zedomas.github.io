@@ -8,11 +8,7 @@ let dealerCount = 0;
 let pAces = 0;
 let dAces = 0;
 let cardTotal = 0;
-let deckID, pCard1, pCard2, dCard1, dCard2, dealerTotal;
-// let pCard1;
-// let pCard2;
-// let dCard1;
-// let dCard2;
+let pCard1, pCard2, dCard1, dCard2, dealerTotal;
 
 //// Generates a new deck and gives the Deck id number
 function newDeckMaker() { 
@@ -23,8 +19,8 @@ function newDeckMaker() {
   });
   return deck.responseJSON.deck_id;
 }
-
-deckID = newDeckMaker()
+// Calls the deck maker and assigned it to the newly declared variable deckID
+let deckID = newDeckMaker()
 
 function shuffler() {
     $.ajax({
@@ -40,14 +36,16 @@ function shuffler() {
 //// clears out the old hands and reenable the button
 function newHand() {
     $('.playerHand').empty()
+     $('.playerHand').append($('<div>').addClass("playerTotal"))
     $('.playerHand').append($('<div>').addClass("left"))
     $('.playerHand').append($('<div>').addClass("right"))
-    $('.playerHand').append($('<div>').addClass("playerTotal"))
+   
 
     $('.dealerHand').empty()
+    $('.dealerHand').append($('<div>').addClass("dealerTotal"))
     $('.dealerHand').append($('<div>').addClass("dLeft"))
     $('.dealerHand').append($('<div>').addClass("dRight"))
-    $('.dealerHand').append($('<div>').addClass("dealerTotal"))
+    
 
     $('.hit-btn').attr('disabled', false)
     $('.stay-btn').attr('disabled', false)
@@ -209,11 +207,15 @@ function dealerPlay() {
 
 
 function newDeal() {
+    //Clears our old divs and resets key variables
     newHand()
-    
+    // Draws the first two cards for each players.
     let playerHand = draw(2)
     let dealerHand = draw(2)
-    
+    // updates remaining cards in the deck
+    $('.remaining').text(dealerHand.remaining)
+
+    //Seperates the cards into individual variables and elimiates unneeded api information
     pCard1 = playerHand.cards[0]
     pCard2 = playerHand.cards[1]
     dCard1 = dealerHand.cards[0]
@@ -235,15 +237,14 @@ function newDeal() {
     if (dCard2.value == "ACE") {
         dAces ++;
     }
-    
+    // updates the dealer's hard to show one of his cards and the back of another.
     $('.dLeft').css("background-image", "url("+dCard1.image+")").addClass(dCard1.value)
     $('.dRight').css("background-image", "url(imgs/pngwing.com.png)").addClass(dCard2.value).addClass('back') 
-
-    $('.remaining').text(playerHand.remaining)
+    // updates the player's hard to show one of his cards and the back of another.    
     $('.left').css("background-image", "url("+pCard1.image+")").addClass(pCard1.value)
     $('.right').css("background-image", "url("+pCard2.image+")").addClass(pCard2.value)
     
-    $('.gamelog').text("PLAYER DRAWS A " + pCard1.value + " AND A " + pCard2.value )
+    $('.gamelog').append("<p>PLAYER DRAWS A " + pCard1.value + " AND A " + pCard2.value+ "</p>" )
     let cardTotal = cardValues(pCard1) + cardValues(pCard2)
     if (cardTotal == 21) {
         cardTotal = "Blackjack!"

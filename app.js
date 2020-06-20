@@ -146,11 +146,16 @@ function hit() {
 
 function doubledown() {
     $('.hit-btn').attr('disabled', true)
+    $('.doubledown').attr('disabled', true)
     winings = parseInt($('.winings').text(), 10) - bet
     bet = bet * 2    
     $('.winings').text(winings)
     hit()
     
+}
+
+function split() {
+    //split workings here
 }
 
 function dealerPlay() {
@@ -208,6 +213,7 @@ function dealerPlay() {
         $('.gamelog').append($('<p>').text("Player wins with black jack"));
         $('.hit-btn').attr('disabled', true)
         $('.stay-btn').attr('disabled', true)
+        $('.doubledown').attr('disabled', true)
         $('.newDeal').attr('disabled', false)
         bet = bet * 1.5 
         winings = winings + bet
@@ -216,6 +222,7 @@ function dealerPlay() {
         $('.gamelog').append($('<p>').text("Dealer wins with black jack"));
         $('.hit-btn').attr('disabled', true)
         $('.stay-btn').attr('disabled', true)
+        $('.doubledown').attr('disabled', true)
         $('.newDeal').attr('disabled', false) 
     }
 
@@ -224,6 +231,7 @@ function dealerPlay() {
         // console.log(dealerTotal + "him  you" + cardTotal);
         $('.hit-btn').attr('disabled', true)
         $('.stay-btn').attr('disabled', true)
+        $('.doubledown').attr('disabled', true)
         $('.newDeal').attr('disabled', false) 
         winings = winings + bet * 2
         $('.winings').text(winings)
@@ -234,6 +242,7 @@ function dealerPlay() {
             // console.log(dealerTotal + "him  you" + cardTotal);
             $('.hit-btn').attr('disabled', true)
             $('.stay-btn').attr('disabled', true)
+            $('.doubledown').attr('disabled', true)
             $('.newDeal').attr('disabled', false) 
             $('.dealerTotal').text("BUSTED") 
             winings = winings + bet * 2
@@ -243,7 +252,8 @@ function dealerPlay() {
             $('.gamelog').append($('<p>').text("Dealer wins!"))
             // console.log(dealerTotal + "him  you" + cardTotal);
             $('.hit-btn').attr('disabled', true)
-            $('.stay-btn').attr('disabled', true) 
+            $('.stay-btn').attr('disabled', true)
+            $('.doubledown').attr('disabled', true) 
             $('.newDeal').attr('disabled', false) 
             $('.dealerTotal').text(dealerTotal) 
             needShuffle()
@@ -252,7 +262,8 @@ function dealerPlay() {
         $('.gamelog').append($('<p>').text("Its a tie, Dealer wins"));
         // console.log(dealerTotal + "him  you" + cardTotal);
         $('.hit-btn').attr('disabled', true)
-        $('.stay-btn').attr('disabled', true) 
+        $('.stay-btn').attr('disabled', true)
+        $('.doubledown').attr('disabled', true) 
         $('.newDeal').attr('disabled', false) 
         $('.dealerTotal').text(dealerTotal)
         needShuffle() 
@@ -261,6 +272,7 @@ function dealerPlay() {
 
 
 function newDeal() {
+    $('.split').css('visibility', 'hidden')
     //Clears our old divs and resets key variables
     newHand()
 
@@ -304,11 +316,13 @@ function newDeal() {
     $('.left').css("background-image", "url("+pCard1.image+")").addClass(pCard1.value)
     $('.right').css("background-image", "url("+pCard2.image+")").addClass(pCard2.value)
     
-    $('.gamelog').append("<p>Play draws a " + pCard1.value.toLowerCase() + " and a " + pCard2.value.toLowerCase() + "</p>" )
     let cardTotal = cardValues(pCard1) + cardValues(pCard2)
     if (cardTotal == 21) {
         cardTotal = "Blackjack!"
         $('.hit-btn').attr('disabled', true) 
+    }
+    if (pCard1.value == pCard2.value) {
+        $('.split').css('visibility', 'visible') 
     }
     dealerTotal = cardValues(dCard1) + cardValues(dCard2)
     $('.playerTotal').text(cardTotal)
@@ -323,9 +337,11 @@ function newDeal() {
 
 
 $(() => {
+    $('.split').on('click', split)
     $('.hit-btn').attr('disabled', true)
     $('.stay-btn').attr('disabled', true)
     $('.doubledown').attr('disabled', true)
+    $('.split').on('click', split)
     $('.newDeal').on("click", newDeal)
     $('.hit-btn').on('click', hit)
     $('.doubledown').on('click', doubledown)

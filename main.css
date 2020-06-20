@@ -16,6 +16,11 @@ aside {
     background-color: saddlebrown;
 }
 
+.rightside {
+    display: flex;
+    flex-direction: column;
+}
+
 .buttons {
     display: flex;
     flex-direction: column;
@@ -41,22 +46,25 @@ aside {
     justify-content: center;
     flex-direction: row;
 }
+
 p {
     margin: 0;
     padding: 0;
 }
+
 .playerHand {
     display: flex;
     align-self: flex-end;
     flex-direction: row;
     width: 500px;
 }
+
 .gamelog {
     height: 100px;
-    width: 400px;
-    overflow: auto;
+    width: 60%;
+    justify-content: center;
+    display: flex;
     align-self: center;
-    background-color: rgba(109, 114, 113, 0.4);
 }
 .dealerHand {
     align-self: flex-start;
@@ -96,6 +104,10 @@ p {
 
 }
 
+.split {
+    visibility: hidden;
+}
+
 .dLeft {
     height: 110px;
     width: 80px;
@@ -110,6 +122,11 @@ p {
     background-position: center;
     display: inline-block;
     transform: translate(-65px);
+}
+
+.shuffle {
+    height: 10%;
+    width: 20%;
 }
 
 .back {

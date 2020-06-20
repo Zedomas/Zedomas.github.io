@@ -34,7 +34,6 @@ function shuffler() {
 }
 // Auto checks to see if the deck is running low and shuffles
 function needShuffle() {
-    console.log(parseInt($('.remaining').text(), 10))
     if (parseInt($('.remaining').text(), 10) < 12) {
         shuffler()
     }
@@ -47,6 +46,7 @@ function newHand() {
     $('.playerHand').append($('<div>').addClass("left"))
     $('.playerHand').append($('<div>').addClass("right"))
    
+    $('.gamelog').empty()
 
     $('.dealerHand').empty()
     $('.dealerHand').append($('<div>').addClass("dealerTotal"))
@@ -154,9 +154,9 @@ function doubledown() {
     
 }
 
-function split() {
-    //split workings here
-}
+// function split() {
+//     //split workings here
+// }
 
 function dealerPlay() {
     // console.log(dCard2)
@@ -321,9 +321,10 @@ function newDeal() {
         cardTotal = "Blackjack!"
         $('.hit-btn').attr('disabled', true) 
     }
-    if (pCard1.value == pCard2.value) {
-        $('.split').css('visibility', 'visible') 
-    }
+    // enables split cards
+    // if (pCard1.value == pCard2.value) {
+    //     $('.split').css('visibility', 'visible') 
+    // }
     dealerTotal = cardValues(dCard1) + cardValues(dCard2)
     $('.playerTotal').text(cardTotal)
 
@@ -337,11 +338,11 @@ function newDeal() {
 
 
 $(() => {
-    $('.split').on('click', split)
+    // $('.split').on('click', split)
     $('.hit-btn').attr('disabled', true)
     $('.stay-btn').attr('disabled', true)
     $('.doubledown').attr('disabled', true)
-    $('.split').on('click', split)
+    // $('.split').on('click', split)
     $('.newDeal').on("click", newDeal)
     $('.hit-btn').on('click', hit)
     $('.doubledown').on('click', doubledown)

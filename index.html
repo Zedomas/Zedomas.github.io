@@ -13,12 +13,23 @@ https://www.pngwing.com/ supplied the back of card img used for the dealer. -->
 </head>
 <body>
    <aside class="leftside">
-      <button class="button">New Deal</button>     
-      <button class="hit-btn">Hit</button>
-      <button class="stay-btn">Stay</button>
+      <button class="newDeal">New Deal</button>     
+      <div class="betholder">
+         <label for="number">Your bet here</label>
+         <input type ="number" value="0" class="bet">
+         <p>Winnings</p>
+         <p class="winings">0</p>
+      </div>
+      
    </aside>
 
-   <div class="container">     
+   <div class="container"> 
+      <div class="buttons">
+         <button class="hit-btn">Hit</button>
+         <button class="stay-btn">Stand</button>
+         <button class="doubledown">Double down</button>
+      </div>
+          
       <div class="table">
          <div class="playerHand">
          </div>
@@ -31,8 +42,12 @@ https://www.pngwing.com/ supplied the back of card img used for the dealer. -->
    <aside class="rightside">
       <div class="remaining"></div> 
       <button class="shuffle">Shuffle</button>
-      <p>Card count</p>
+      <p class="cardCounter">Card count</p>
       <p class="cardCount"></p>
+
+      <input type="checkbox" class="counterchecker">
+      <label>Toggle card counter visiblity</label>
+
    </aside>
 </body>
 </html>

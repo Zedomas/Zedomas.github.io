@@ -7,11 +7,29 @@ body {
     width: 60%;
     display: flex;
     justify-content: center;
+    justify-content: space-evenly;
     background-color: darkslategray;
+
 }
 aside {
     width: 20%;
     background-color: saddlebrown;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.stay-btn {
+    height: 30px;
+    width: 60px;
+}
+
+.hit-btn {
+    height: 30px;
+    width: 60px;
 }
 
 .table {
@@ -35,7 +53,7 @@ p {
 }
 .gamelog {
     height: 100px;
-    width: 300px;
+    width: 400px;
     overflow: auto;
     align-self: center;
     background-color: rgba(109, 114, 113, 0.4);

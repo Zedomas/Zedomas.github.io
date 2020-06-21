@@ -1,50 +1,54 @@
 /* Main body elements */
 
-body {
-    background-color: black;
-    height: 900px;
-}
-.gameboard {
-    display: flex;
-    height: 80%;
+html, body {
+    height: 100%;
 }
 
+body {
+    background-color: gray;
+    
+}
+
+.container {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    justify-content: space-evenly;
+    background-color: #9F805D ;
+
+}
+
+
 h1 {
-    color: green;
+    color: rgb(17, 1, 1);
     font-family: 'Sriracha', cursive;
     text-align: center;
     font-size: 50px;
 }
 
-aside {
-    width: 15%;
-    background-color: saddlebrown;
-}
-
-.container {
-    width: 70%;
-    display: flex;
-    justify-content: center;
-    justify-content: space-evenly;
-    background-color: rgb(32, 116, 32);
-
-}
-
 p {
     margin: 0;
     padding: 0;
-}
-
-/* new deal button and the betting */
-
-
-
-
-/* gameboard */
-
-.buttons {
+} 
+/* left side of the gameboard */
+.control{
+    width: 20%;
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
+}
+
+.deal {
+    justify-content: flex-start;
+}
+
+.newDeal {
+    width: 50%;
+    height: 50%;
+}
+
+.buttons {
     justify-content: center;
 }
 
@@ -66,25 +70,20 @@ p {
     border-radius: 50%;
 }
 
+.winningsInfo {
+    text-decoration: underline;
+    padding-top: 15px;
+}
+
+/* center of the game board */
 .table {
-    align-self: center;
-    height: 50%;
-    width: 900px;
-    background-color: rgb(32, 116, 32);
+    background-color: rgb(36, 105, 46);
+    width: 75%;
     display: flex;
     justify-content: center;
     flex-direction: row;
     border-left: 2px solid;
-
-}
-
-/* Inside the table */
-
-.playerHand {
-    display: flex;
-    align-self: flex-end;
-    flex-direction: row;
-    width: 500px;
+    border-right: 2px solid;
 }
 
 .gamelog {
@@ -94,12 +93,14 @@ p {
     display: flex;
     align-self: center;
 }
-.dealerHand {
-    align-self: flex-start;
+
+.playerHand {
     display: flex;
+    align-self: flex-end;
     flex-direction: row;
     width: 500px;
 }
+
 .left {
     height: 110px;
     width: 80px;
@@ -115,6 +116,7 @@ p {
     display: inline-block;
     transform: translate(-65px);
 }
+
 .hit {
     height: 110px;
     width: 80px;
@@ -123,6 +125,14 @@ p {
     display: inline-block;
 
 }
+
+.dealerHand {
+    align-self: flex-start;
+    display: flex;
+    flex-direction: row;
+    width: 500px;
+}
+
 .dHit {
     height: 110px;
     width: 80px;
@@ -149,26 +159,240 @@ p {
 }
 
 .back {
-    transform: scale(1.3);
+    transform: scale(1.25);
 }
 
-/* Deck shuffler and card counting */
 
-.rightside {
-    display: flex;
-    flex-direction: column;
+
+
+
+
+/* right side of game board */
+.info {
+    width: 15%;
 }
 
-.shuffle {
-    height: 10%;
-    width: 20%;
+
+.cardCounter {
+    text-decoration: underline;
 }
 
-/* Features to maybe be added in the future */
-/* .split {
+.deckInfo {
+    padding: 5px;
+}
+
+.winningsInfo .winningsTip {
     visibility: hidden;
-} */
+    width: 120px;
+    background-color: #fff;
+    color: #000;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1; 
+}
 
+.cardCounter .counterTip {
+    visibility: hidden;
+    width: 120px;
+    background-color: #fff;
+    color: #000;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 2; 
+} 
+
+.cardCounter:hover .counterTip {
+    visibility: visible;
+  }
+
+.winningsInfo:hover .winningsTip {
+    visibility: visible;
+}
+
+.mobileButton {
+    display: none;
+}
+
+/* ================================= */
+@media screen and (max-width: 750px) {
+
+    html, body {
+        height: 100%;
+    }
+    
+    body {
+        background-color: gray;
+        font-size: 14px;
+        
+    }
+    
+    .container {
+        width: 100%;
+        height: 90%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        justify-content: space-evenly;
+        background-color: #9F805D ;    
+    }
+    
+        
+    p {
+        margin: 0;
+        padding: 0;
+    } 
+     /*========================================  */
+    /* left side of the gameboard */
+    .control{
+        width: 40%;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        padding-left: 0px;
+    }
+    
+    .betholder {
+        width: 25%;
+    }
+
+    .deal {
+       height: 80%; 
+    }
+    
+    .buttons {
+        order: -1;
+    }
+
+    .mobileButton {
+        display: inline;
+    }
+
+    .newDeal {
+        width: 25%;
+        height: 25%;
+        font-size: 10px;
+    }
+      
+    .hit-btn {
+        height: 2em;
+        width: 2em;
+        background-image: url("imgs/Poker\ Chip.png");
+        background-size: cover;
+        background-position: center;
+        border-radius: 50%;
+        color: rgba(0, 0, 0, 0);
+ 
+    }
+    
+    .stay-btn {
+        height: 2em;
+        width: 2em;
+        background-image: url("imgs/blue\ chip.png");
+        background-size: cover;
+        background-position: center;
+        border-radius: 50%;
+        color: rgba(0, 0, 0, 0);
+    }
+    
+     /*========================================  */ 
+    /* center of the game board */
+    .table {
+        background-color: rgb(36, 105, 46);
+        width: 100%;
+        height: 50%;
+        order: -1;
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        border-left: 2px solid;
+        border-right: 2px solid;
+        justify-content: space-evenly;
+    }
+    
+    .gamelog {
+        height: 100px;
+        width: 60%;
+        justify-content: center;
+        display: flex;
+        align-self: center;
+    }
+    
+    .playerHand {
+        display: flex;
+        align-self: flex-end;
+        flex-direction: row;
+        width: 200px;
+        translate: translate(200px);
+        padding-left: 40px;
+    }
+    
+    .playerTotal {
+        order: 2
+    }
+
+    .left {
+        height: 60px;
+        width: 42px;
+       
+    }
+    .right {
+        height: 60px;
+        width: 42px;      
+    }
+    
+    .hit {
+        height: 60px;
+        width: 42px;
+        background-size: cover;
+        background-position: center;
+        display: inline-block;
+    
+    }
+
+    .dealerHand {
+        align-self: flex-start;
+        display: flex;
+        flex-direction: row;
+        width: 200px;
+        padding-right: 30px;
+    }
+    
+    .dealerTotal {
+        order: 2
+    }
+
+    .dHit {
+        height: 60px;
+        width: 42px;
+        background-size: cover;
+        background-position: center;
+        display: inline-block;
+    
+    }
+    
+    .dLeft {
+        height: 60px;
+        width: 42px;        
+    }
+
+    .dRight {
+        height: 60px;
+        width: 42px;
+        transform: translate(-65px);
+    }
+
+    .deckInfo {
+        display: none;
+    }
+
+    .back {
+        transform: scale(1.25);
+    }
+/*  =================================================  */
+
+
+}
 
 
 

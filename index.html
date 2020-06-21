@@ -13,48 +13,60 @@ https://www.pngwing.com/ supplied the back of card img used for the dealer. -->
     <script src="app.js"></script>
 </head>
 <body>
-   <div class="title">
-   <h1>Blackjack</h1>
-   </div>
-   <div class="gameboard">
-      <aside class="leftside">
-         <button class="newDeal">New Deal</button>     
-         <div class="betholder">
-            <label for="number">Your bet here</label>
-            <input type ="number" value="0" class="bet">
-            <p>Winnings</p>
-            <p class="winings">0</p>
-         </div>
-         
-      </aside>
+   
 
-      <div class="container"> 
+   <header class="title">
+      <h1>Blackjack</h1>
+   </header>
+
+   <div class="container">
+      <div class="control">
+         <div class="deal">
+            <button class="newDeal">New Deal</button>     
+            <div class="betholder">
+               <label for="number">Your bet here</label>
+               <br>
+               <input type ="number" value="0" class="bet">   
+               <p class="winningsInfo">
+                  Winnings
+                  <span class="winningsTip">Shows you how much you've won, or more likely how much you've lost</span>
+               </p>
+               <p class="winings">0</p>
+            </div>
+         </div>
          <div class="buttons">
             <button class="hit-btn">Hit</button>
+            <p class="mobileButton">Hit</p>
             <button class="stay-btn">Stand</button>
+            <p class="mobileButton">Stand</p>
             <button class="doubledown">Double down</button>
-            <!-- <button class="split">Split</button> -->
          </div>
-            
-         <div class="table">
-            <div class="playerHand">
-            </div>
-            <div class="gamelog"></div>
-            <div class="dealerHand">
-            </div>
-            
-         </div>   
       </div>
-      <aside class="rightside">
+
+      <div class="table">
+         <div class="playerHand"></div>
+         <div class="gamelog"></div>
+         <div class="dealerHand"></div>
+      </div>
+
+      <div class="info">
+         <div class="deckInfo">
+         <label>Amount of cards in the deck</label>
          <div class="remaining"></div> 
          <button class="shuffle">Shuffle</button>
-         <p class="cardCounter">Card count</p>
+         </div>
+         <p class="cardCounter">Card count
+         <span class="counterTip">This tracks cards played previously. High cards lower the card count and encourage lower betting, while higher card count suggest an abunaces of higher cards and suggest bigger bettings</span>
+         </p>
          <p class="cardCount"></p>
 
-         <input type="checkbox" class="counterchecker">
+         <input type="checkbox" class="counterchecker" class="tooltip">
+         
          <label>Toggle card counter visiblity</label>
+      </div>
 
-      </aside>
    </div>
+
+
 </body>
 </html>

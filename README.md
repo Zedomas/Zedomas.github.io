@@ -4,7 +4,7 @@
 
 This is Blackjack made using deckofcardsapi.com.
 
-DeckofcardsApi.com is a api that you can request a unique deck and manipulate it to do whatever you can do with cards.
+DeckofcardsApi.com is an api that can generate a unique deck and manipulate it to do whatever you can do with cards.
 
 ## What does it do?
 

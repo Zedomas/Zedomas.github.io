@@ -29,6 +29,8 @@ function shuffler() {
         url: url+deckID+shuffle,
     });
     newHand()
+    $('.newDeal').attr('disabled', false)
+    $('.remaining').text(52 * 6)
     cardCount = 0;
     $('.cardCount').text(cardCount)
 }
@@ -358,6 +360,13 @@ $(() => {
         }
         
     })
+    $('.triggerHowTo').on("click", function() {
+        $('.howToPlay').css('display', "block")
+    })
+    $('.close').on("click", function() {
+        $('.howToPlay').css('display', "none")
+    })
+
 })
 
 

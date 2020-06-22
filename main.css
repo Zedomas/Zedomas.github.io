@@ -9,6 +9,22 @@ body {
     
 }
 
+.title {
+    background-image: url(imgs/pngwing.com\ \(4\).png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    display: flex;
+    flex-direction: row;
+    height: 20%;
+    justify-content: center;
+    justify-content: space-between;
+}
+.title img {
+    height: auto;
+    width: 20%;
+}
+
 .container {
     width: 100%;
     height: 80%;
@@ -25,6 +41,8 @@ h1 {
     font-family: 'Sriracha', cursive;
     text-align: center;
     font-size: 50px;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: white;
 }
 
 p {
@@ -39,17 +57,33 @@ p {
     justify-content: space-around;
 }
 
+.howTo {
+    text-align: center;
+}
+
 .deal {
     justify-content: flex-start;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.betholder {
+    padding: 5px;
 }
 
 .newDeal {
-    width: 50%;
+    width: 70%;
     height: 50%;
+    padding: 5px;
 }
 
 .buttons {
+    border-radius: 25px;
+    text-align: center;
     justify-content: center;
+    border-style: solid;
+    border-width: 2px;
 }
 
 .hit-btn {
@@ -170,6 +204,9 @@ p {
 /* right side of game board */
 .info {
     width: 15%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 
@@ -191,13 +228,14 @@ p {
     z-index: 1; 
 }
 
-.cardCounter .counterTip {
+.counterTip {
     visibility: hidden;
     width: 120px;
     background-color: #fff;
     color: #000;
     border-radius: 6px;
-    position: absolute;
+    position: fixed;
+    right: 0;
     z-index: 2; 
 } 
 
@@ -213,6 +251,28 @@ p {
     display: none;
 }
 
+/* How to styling */
+
+.triggerHowTo {
+    text-decoration: underline;
+    color: blue;
+}
+
+.howToPlay {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: auto;
+    right: auto;
+    background-color: white;
+}
+
+
+
+/* end of how to styling */
+
+
+
 /* ================================= */
 @media screen and (max-width: 750px) {
 
@@ -226,9 +286,13 @@ p {
         
     }
     
+    .title {
+        height: 18%;
+    }
+
     .container {
         width: 100%;
-        height: 90%;
+        height: 80%;
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
@@ -258,6 +322,8 @@ p {
 
     .deal {
        height: 80%; 
+       display: flex;
+       flex-direction: column;
     }
     
     .buttons {
@@ -281,8 +347,7 @@ p {
         background-size: cover;
         background-position: center;
         border-radius: 50%;
-        color: rgba(0, 0, 0, 0);
- 
+        color: rgba(0, 0, 0, 0); 
     }
     
     .stay-btn {
@@ -295,6 +360,22 @@ p {
         color: rgba(0, 0, 0, 0);
     }
     
+    /* How to styling */
+
+    .howToPlay {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0%;
+        top: 0%;
+        background-color: white;
+    }
+
+    .triggerHowTo {
+        order: -2;
+    }
+
+    /* end of how to styling */
      /*========================================  */ 
     /* center of the game board */
     .table {
@@ -383,15 +464,25 @@ p {
         transform: translate(-65px);
     }
 
-    .deckInfo {
-        display: none;
-    }
+  
 
     .back {
         transform: scale(1.25);
     }
 /*  =================================================  */
+/*  ============= Right Side ========================  */
+    .winningsTip {
+        position: fixed;
+        bottom: 0;
+    }
 
+   .deckInfo {
+     display: none;
+    }  
+
+    .info {
+        flex-direction: row;
+    }
 
 }
 

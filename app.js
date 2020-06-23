@@ -166,7 +166,7 @@ function dealerPlay() {
     $('.dealerTotal').text(dealerTotal)
     $('.dRight').css("background-image", "url("+dCard2.image+")").removeClass('back') 
     cardTotal = $('.playerTotal').text()
-    console.log("test " + cardTotal)
+    // console.log("test " + cardTotal)
     if (cardTotal != "Blackjack!") {
         cardTotal = parseInt($('.playerTotal').text(), 10)
     } 
@@ -274,7 +274,7 @@ function dealerPlay() {
 
 
 function newDeal() {
-    $('.split').css('visibility', 'hidden')
+    // $('.split').css('visibility', 'hidden')
     //Clears our old divs and resets key variables
     newHand()
 
